@@ -4,8 +4,8 @@ import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-12 px-8 md:px-32">
+        <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 pt-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 py-12 px-8 xl:px-32">
 
                 {/* Contact Us */}
                 <div>
@@ -82,7 +82,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className="bg-blue-600 py-6 px-8 md:px-32 text-white flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 text-center md:text-left border-t border-blue-500">
+            <div className="bg-blue-600 py-6 px-8 xl:px-32 text-white flex flex-col xl:flex-row items-center justify-between space-y-4 xl:space-y-0 text-center xl:text-left border-t border-blue-500">
                 <div>
                     © {new Date().getFullYear()} <span className="font-bold">MyHealthCare</span>. All Rights Reserved.
                 </div>
