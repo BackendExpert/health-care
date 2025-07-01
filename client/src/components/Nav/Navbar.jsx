@@ -13,9 +13,11 @@ const Navbar = () => {
             <div className="flex justify-between items-center px-8 xl:px-32 py-4">
 
                 {/* Logo */}
-                <Link to="/" className="text-2xl font-bold text-blue-900">
-                    MyHealthCare
-                </Link>
+                <div className="">
+                    {/* <Link to="/" className="text-2xl font-bold text-blue-900">
+                        MyHealthCare
+                    </Link> */}
+                </div>
 
                 {/* Desktop Menus */}
                 <div className="hidden xl:flex space-x-6">
