@@ -7,44 +7,57 @@ import Navbar from './components/Nav/Navbar'
 import TopNav from './components/Nav/TopNav'
 
 function App() {
-  const [showTopNav, setShowTopNav] = useState(true)
-  const [showNavbar, setShowNavbar] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
+    const [showTopNav, setShowTopNav] = useState(false)
+    const [showNavbar, setShowNavbar] = useState(true)
+    const [lastScrollY, setLastScrollY] = useState(0)
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show/hide TopNav depending on scrollY
-      setShowTopNav(window.scrollY < 20)
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 768)
+        }
+        window.addEventListener('resize', handleResize)
+        handleResize() // initial check
 
-      // Detect scroll direction for Navbar
-      if (window.scrollY > lastScrollY && window.scrollY > 50) {
-        // scrolling down and scrolled past 50px — hide Navbar
-        setShowNavbar(false)
-      } else {
-        // scrolling up — show Navbar
-        setShowNavbar(true)
-      }
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
-      setLastScrollY(window.scrollY)
-    }
+    useEffect(() => {
+        if (!isDesktop) {
+            setShowTopNav(false)
+            setShowNavbar(true)
+            return
+        }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+        const checkScroll = () => {
+            setShowTopNav(window.scrollY < 20)
+            if (window.scrollY > lastScrollY && window.scrollY > 50) {
+                setShowNavbar(false)
+            } else {
+                setShowNavbar(true)
+            }
+            setLastScrollY(window.scrollY)
+        }
 
-  return (
-    <BrowserRouter>
-      <TopNav show={showTopNav} />
-      {/* Padding top when TopNav visible */}
-      <div style={{ paddingTop: showTopNav ? 60 : 0 }}>
-        <Navbar show={showNavbar} />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-        </Routes>
-        <Footer />
-      </div>
-    </BrowserRouter>
-  )
+        // Check once on mount
+        checkScroll()
+
+        window.addEventListener('scroll', checkScroll)
+        return () => window.removeEventListener('scroll', checkScroll)
+    }, [lastScrollY, isDesktop])
+    
+    return (
+        <BrowserRouter>
+            {isDesktop && <TopNav show={showTopNav} />}
+            <div style={{ paddingTop: isDesktop && showTopNav ? 60 : 0 }}>
+                <Navbar show={showNavbar} />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                </Routes>
+                <Footer />
+            </div>
+        </BrowserRouter>
+    )
 }
 
 export default App

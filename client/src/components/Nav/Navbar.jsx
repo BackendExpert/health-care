@@ -14,9 +14,9 @@ const Navbar = () => {
 
                 {/* Logo */}
                 <div className="">
-                    {/* <Link to="/" className="text-2xl font-bold text-blue-900">
+                    <Link to="/" className="text-2xl font-bold text-blue-900">
                         MyHealthCare
-                    </Link> */}
+                    </Link>
                 </div>
 
                 {/* Desktop Menus */}

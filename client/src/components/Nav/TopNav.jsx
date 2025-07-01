@@ -9,7 +9,7 @@ const TopNav = ({ show }) => {
           ${show ? 'translate-y-0 pointer-events-auto' : '-translate-y-full pointer-events-none'}`}
       style={{ height: '60px' }} // fix height to 60px
     >
-      <div className="text-2xl font-bold text-blue-700">MyHealthcare</div>
+      <div className="text-2xl font-bold text-blue-700"></div>
       <div className="flex flex-col md:flex-row gap-4 text-blue-800 text-sm">
         <div className="flex items-center gap-2">
           <FaPhoneAlt className="text-blue-600" />
