@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DefaultInput from '../../components/Form/DefaultInput'
 import TextAreaInput from '../../components/Form/TextAreaInput'
 import Dropdown from '../../components/Form/Dropdown'
@@ -21,6 +21,34 @@ const UpdatePatientInfor = () => {
         bloodgroup: ''
     })
 
+    useEffect(() => {
+        const fetchPatientData = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_APP_API}/user/current-userdata/${currentEmail}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+
+                const patient = res.data.patient
+                if (patient) {
+                    setPatientinfo({
+                        fullname: patient.fullname || '',
+                        age: patient.age || '',
+                        nic: patient.nic || '',
+                        gender: patient.gender || '',
+                        address: patient.address || '',
+                        contactInfo: patient.contactInfo || '',
+                        landline: patient.landline || '',
+                        bloodgroup: patient.bloodgroup || ''
+                    })
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        fetchPatientData()
+    }, [currentEmail, token])
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setPatientinfo((prev) => ({
@@ -32,20 +60,19 @@ const UpdatePatientInfor = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(import.meta.env.VITE_APP_API + '/user/create-patientdata/' + currentEmail , patientinfo, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            })
-            if (res.data.Status === "Success") {
+            const res = await axios.post(
+                `${import.meta.env.VITE_APP_API}/user/create-patientdata/${currentEmail}`,
+                patientinfo,
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+
+            if (res.data?.Message) {
                 alert(res.data.Message)
                 window.location.reload()
-            }
-            else {
+            } else if (res.data?.Error) {
                 alert(res.data.Error)
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -83,17 +110,19 @@ const UpdatePatientInfor = () => {
                     <Dropdown
                         label="Gender"
                         name="gender"
+                        value={patientinfo.gender}
                         onChange={handleChange}
                         required
                         options={[
                             { label: 'Male', value: 'Male' },
                             { label: 'Female', value: 'Female' },
-                            { label: 'Other', value: 'Other' },
+                            { label: 'Other', value: 'Other' }
                         ]}
                     />
                     <Dropdown
                         label="Blood Group"
                         name="bloodgroup"
+                        value={patientinfo.bloodgroup}
                         onChange={handleChange}
                         required
                         options={[
@@ -104,7 +133,7 @@ const UpdatePatientInfor = () => {
                             { label: 'AB+', value: 'AB+' },
                             { label: 'AB-', value: 'AB-' },
                             { label: 'O+', value: 'O+' },
-                            { label: 'O-', value: 'O-' },
+                            { label: 'O-', value: 'O-' }
                         ]}
                     />
                     <TextAreaInput
@@ -131,10 +160,7 @@ const UpdatePatientInfor = () => {
                         placeholder="Enter landline number"
                     />
                 </div>
-                <DefaultBtn
-                    type='submit'
-                    label='Update Patient'
-                />
+                <DefaultBtn type="submit" label="Update Patient" />
             </form>
         </div>
     )

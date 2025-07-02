@@ -6,16 +6,20 @@ const userController = {
         try {
             const email = req.params.email
 
-            const getuserdata = await User.findOne({ email: email }).populate('roles')
+            const getuserdata = await User.findOne({ email }).populate('roles')
+            const patient = await Patients.findOne({ userID: getuserdata?._id })
 
-            return res.json({ Result: getuserdata })
-        }
-        catch (err) {
+            return res.json({
+                Result: getuserdata,
+                patient: patient || null
+            })
+        } catch (err) {
             console.log(err)
+            return res.json({ Error: 'Something went wrong' })
         }
     },
 
-    createPatientData: async (req, res) => {
+    createOrUpdatePatientData: async (req, res) => {
         try {
             const {
                 fullname,
@@ -29,41 +33,46 @@ const userController = {
             } = req.body
 
             const currentemail = req.params.email
+            const checkdata = await User.findOne({ email: currentemail })
+            if (!checkdata) return res.json({ Error: "User not found" })
 
-            const checkdata = await User.findOne({ email: email })
+            let patient = await Patients.findOne({ userID: checkdata._id })
 
-            const checkpatient =  await Patients.findOne({ userID: checkdata._id })
+            if (patient) {
+                // Update existing patient
+                patient.fullname = fullname
+                patient.age = age
+                patient.nic = nic
+                patient.gender = gender
+                patient.address = address
+                patient.contactInfo = contactInfo
+                patient.landline = landline
+                patient.bloodgroup = bloodgroup
 
-            if(checkpatient){
-                return res.json({ Error: "You Already add your data"})
+                await patient.save()
+                return res.json({ Status: "Success", Message: "Patient Data Updated Successfully" })
+            } else {
+                // Create new patient
+                const newpatient = new Patients({
+                    userID: checkdata._id,
+                    fullname,
+                    age,
+                    nic,
+                    gender,
+                    address,
+                    contactInfo,
+                    landline,
+                    bloodgroup
+                })
+                await newpatient.save()
+                return res.json({ Status: "Success", Message: "Patient Data Created Successfully" })
             }
-            
-
-            const newpatient = new Patients({
-                userID: checkdata._id,
-                age: age,
-                nic: nic,
-                gender: gender,
-                fullname: fullname,
-                address: address,
-                contactInfo: contactInfo,
-                landline: landline,
-                bloodgroup: bloodgroup                
-            })
-
-            const resultCreatePatient = await newpatient.save()
-
-            if(resultCreatePatient){
-                return res.json({ Status: "Success", Message: "Patient Data Created Success"})
-            }
-            else{
-                return res.json({ Error: "Internal Server Error whitle creating Patinet Data"})
-            }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
+            return res.json({ Error: "Internal Server Error" })
         }
     }
+
 };
 
 module.exports = userController;
