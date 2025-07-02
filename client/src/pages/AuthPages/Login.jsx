@@ -86,9 +86,7 @@ const Login = () => {
                                 Login
                             </button>
                         </form>
-                        <a href="" className='text-blue-700 hover:underline'>
-                            forget password
-                        </a>
+
                     </div>
                 ) : (
                     <form onSubmit={handleRegisterSubmit} className="space-y-6">
