@@ -76,9 +76,11 @@ const Services = () => {
                 <p className="max-w-2xl mx-auto mb-6">
                     Schedule a consultation or learn more about how we can help you live your healthiest life.
                 </p>
-                <button className="bg-white text-blue-700 font-semibold px-6 py-3 rounded-full hover:bg-blue-50 transition">
-                    Book an Appointment
-                </button>
+                <a href="/login">
+                    <button className="bg-white text-blue-700 font-semibold px-6 py-3 rounded-full hover:bg-blue-50 transition">
+                        Book an Appointment
+                    </button>
+                </a>
             </div>
         </div>
     )
