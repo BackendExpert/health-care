@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import secureLocalStorage from 'react-secure-storage'
 
 const Login = () => {
     const [activeTab, setActiveTab] = useState('login')
@@ -14,6 +15,9 @@ const Login = () => {
             console.log('Login response:', res.data)
             if (res.data.Status === "Success") {
                 alert(res.data.Message)
+                secureLocalStorage.setItem('login', res.data.Token);
+                secureLocalStorage.setItem('dashmenuID', 1);
+                navigate('/Dashboard/Home');
             } else {
                 alert('Login failed: ' + (res.data.Error || 'Unknown error'))
             }

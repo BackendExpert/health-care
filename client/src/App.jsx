@@ -14,6 +14,12 @@ import TestForm from './pages/Testings/TestForm'
 import NotFound from './components/Errors/NotFound'
 import Login from './pages/AuthPages/Login'
 import NEWS from './pages/NEWS/NEWS'
+import PrivateRoute from './components/Auth/PrivateRoute'
+
+
+
+import Dashboard from './components/Dashboard/Dashboard'
+import DashHome from './DashboardPages/DashHome/DashHome'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -63,13 +69,17 @@ function App() {
                 <Routes>
                     <Route path='*' element={<NotFound />} />
                     <Route path="/" element={<HomePage />} />
-                    <Route path='/about' element={<AboutUs /> } />
+                    <Route path='/about' element={<AboutUs />} />
                     <Route path='/services' element={<Services />} />
-                    <Route path='/doctors' element={<Doctors /> } />
-                    <Route path='/products' element={<OurProducts /> } />
-                    <Route path='/contact' element={<ContactUs /> } />
-                    <Route path='/news' element={<NEWS /> } />
-                    <Route path='/login' element={<Login /> } />
+                    <Route path='/doctors' element={<Doctors />} />
+                    <Route path='/products' element={<OurProducts />} />
+                    <Route path='/contact' element={<ContactUs />} />
+                    <Route path='/news' element={<NEWS />} />
+                    <Route path='/login' element={<Login />} />
+
+                    <Route path='/Dashboard/' element={<PrivateRoute element={<Dashboard />} />} >
+                        <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
+                    </Route>
                 </Routes>
                 <Footer />
             </div>
