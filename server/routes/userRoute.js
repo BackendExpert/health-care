@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.get('/current-userdata/:email', authMiddleware, checkPermission('get-my-data'), userController.getcurrentuserdata)
 
+router.post('/create-patientdata/:email', authMiddleware, checkPermission('create-patientdata'), userController.createPatientData)
+
 module.exports = router;

@@ -3,8 +3,13 @@ import DefaultInput from '../../components/Form/DefaultInput'
 import TextAreaInput from '../../components/Form/TextAreaInput'
 import Dropdown from '../../components/Form/Dropdown'
 import DefaultBtn from '../../components/Buttons/DefultBtn'
+import axios from 'axios'
+import secureLocalStorage from 'react-secure-storage'
 
 const UpdatePatientInfor = () => {
+    const currentEmail = secureLocalStorage.getItem('loginE')
+    const token = secureLocalStorage.getItem('login')
+
     const [patientinfo, setPatientinfo] = useState({
         fullname: '',
         age: '',
@@ -24,10 +29,25 @@ const UpdatePatientInfor = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // TODO: Replace this with actual API call to update patient data
-        console.log('Updated patient info:', patientinfo)
+        try {
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/user/create-patientdata/' + currentEmail , patientinfo, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            })
+            if (res.data.Status === "Success") {
+                alert(res.data.Message)
+                window.location.reload()
+            }
+            else {
+                alert(res.data.Error)
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -111,7 +131,7 @@ const UpdatePatientInfor = () => {
                         placeholder="Enter landline number"
                     />
                 </div>
-                <DefaultBtn 
+                <DefaultBtn
                     type='submit'
                     label='Update Patient'
                 />
