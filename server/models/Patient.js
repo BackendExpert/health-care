@@ -5,6 +5,14 @@ const PatientsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    nic: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
     fullname: {
         type: String,
         required: true
