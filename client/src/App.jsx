@@ -8,6 +8,7 @@ import TopNav from './components/Nav/TopNav'
 import AboutUs from './pages/AboutUs/AboutUs'
 import Services from './pages/Services/Services'
 import Doctors from './pages/Doctors/Doctors'
+import OurProducts from './pages/Products/OurProducts'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -59,6 +60,7 @@ function App() {
                     <Route path='/about' element={<AboutUs /> } />
                     <Route path='/services' element={<Services />} />
                     <Route path='/doctors' element={<Doctors /> } />
+                    <Route path='/products' element={<OurProducts /> } />
                 </Routes>
                 <Footer />
             </div>
