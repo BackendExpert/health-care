@@ -1,9 +1,25 @@
-import { MdBedroomParent, MdDashboard, MdAdminPanelSettings } from "react-icons/md";
-import { FaSchool, FaUserGraduate, FaGear } from "react-icons/fa6";
-import { FaUserCog, FaUsers, FaUserLock } from "react-icons/fa";
-import { MdContactEmergency } from "react-icons/md";
-import { FaHouseUser } from "react-icons/fa";
+import {
+    MdDashboard,
+    MdPayment,
+    MdInventory,
+    MdContactPhone
+} from "react-icons/md";
 
+import {
+    FaFileInvoiceDollar,
+    FaHospitalUser,
+    FaCalendarCheck,
+    FaRegClipboard,
+    FaUserNurse,
+    FaUsers,
+    FaHospital
+} from "react-icons/fa6";
+
+import {
+    FaHeartbeat,
+    FaUserCog,
+    FaUserMd
+} from "react-icons/fa";
 
 const dashsidedata = [
     {
@@ -14,64 +30,70 @@ const dashsidedata = [
     },
     {
         id: 2,
-        name: 'Hostel',
-        link: '/Dashboard/Hostels',
-        icon: FaSchool
+        name: 'Patients',
+        link: '/Dashboard/Patients',
+        icon: FaHospitalUser
+    },
+    {
+        id: 3,
+        name: 'Appointments',
+        link: '/Dashboard/Appointments',
+        icon: FaCalendarCheck
     },
     {
         id: 4,
-        name: 'Rooms',
-        link: '/Dashboard/Rooms',
-        icon: MdBedroomParent
+        name: 'Doctors',
+        link: '/Dashboard/Doctors',
+        icon: FaUserMd
     },
     {
         id: 5,
-        name: 'Rooms',
-        link: '/Dashboard/WardenRooms',
-        icon: MdBedroomParent
+        name: 'Staff',
+        link: '/Dashboard/Staff',
+        icon: FaUserNurse
     },
     {
         id: 6,
-        name: 'Students',
-        link: '/Dashboard/Students',
-        icon: FaUserGraduate
+        name: 'Billing',
+        link: '/Dashboard/Billing',
+        icon: FaFileInvoiceDollar
     },
     {
         id: 7,
-        name: 'Students',
-        link: '/Dashboard/WardenStudents',
-        icon: FaUserGraduate
+        name: 'Payment',
+        link: '/Dashboard/Payment',
+        icon: MdPayment
     },
     {
         id: 8,
-        name: 'Profile',
-        link: '/Dashboard/Profile',
-        icon: FaUserCog,
+        name: 'Pharmacy',
+        link: '/Dashboard/Pharmacy',
+        icon: MdInventory
     },
     {
         id: 9,
-        name: 'Permission',
-        link: '/Dashboard/Permissions',
-        icon: FaUserLock
+        name: 'Report Generation',
+        link: '/Dashboard/Reports',
+        icon: FaRegClipboard
     },
     {
         id: 10,
-        name: 'Users',
+        name: 'Emergency Contacts',
+        link: '/Dashboard/EmergencyContacts',
+        icon: MdContactPhone
+    },
+    {
+        id: 11,
+        name: 'System Users',
         link: '/Dashboard/Users',
         icon: FaUsers
     },
     {
-        id: 11,
-        name: 'EmergencyContact',
-        link: '/Dashboard/EmergencyContact',
-        icon: MdContactEmergency
-    },
-    {
         id: 12,
-        name: 'Extra Needs',
-        link: '/Dashboard/ExtraNeeds',
-        icon: FaHouseUser
-    },
-]
+        name: 'Profile',
+        link: '/Dashboard/Profile',
+        icon: FaUserCog
+    }
+];
 
-export { dashsidedata }
+export { dashsidedata };
