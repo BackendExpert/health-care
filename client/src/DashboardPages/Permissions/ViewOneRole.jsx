@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import DefaultInput from '../../components/Form/DefaultInput'
-import DefaultBtn from '../../components/Button/DefaultBtn'
+import DefaultBtn from '../../components/Buttons/DefultBtn'
+import secureLocalStorage from 'react-secure-storage'
 
 const ViewOneRole = () => {
     const { id } = useParams()
     const navigate = useNavigate()
-    const token = localStorage.getItem('login')
+    const token = secureLocalStorage.getItem('login')
     const [getonerole, setgetonerole] = useState({})
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const ViewOneRole = () => {
     return (
         <div className="bg-gray-100 py-10 px-4">
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-                <h1 className="text-3xl font-bold text-emerald-600 mb-4">
+                <h1 className="text-3xl font-bold text-blue-600 mb-4">
                     Role: <span className="uppercase">{getonerole?.name}</span>
                 </h1>
 
@@ -74,7 +75,7 @@ const ViewOneRole = () => {
                                 getonerole.permissions.map((perm, index) => (
                                     <span
                                         key={index}
-                                        className="inline-block bg-emerald-100 text-emerald-700 text-sm px-3 py-1 rounded-full shadow-sm"
+                                        className="inline-block bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full shadow-sm"
                                     >
                                         {perm}
                                     </span>
@@ -93,7 +94,7 @@ const ViewOneRole = () => {
             </div>
 
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 mt-4">
-                <h1 className="text-xl font-bold text-emerald-600 mb-4">To Delete Permission from Role</h1>
+                <h1 className="text-xl font-bold text-blue-600 mb-4">To Delete Permission from Role</h1>
 
                 <form onSubmit={headleDeletePermission} method="post">
                     <DefaultInput
@@ -107,7 +108,7 @@ const ViewOneRole = () => {
                     />
 
                     <div className="-mt-4">
-                        <DefaultBtn 
+                        <DefaultBtn
                             type='submit'
                             label='Delete Permission'
                         />

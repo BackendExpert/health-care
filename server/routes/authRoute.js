@@ -1,12 +1,15 @@
 const express = require('express');
 const authController = require('../controllers/authController');
-const authMiddleware = require('../middlewares/AuthMiddleware')
+const { authMiddleware } = require('../middlewares/AuthMiddleware');
 const checkPermission = require('../middlewares/checkPermissionMiddleware');
 
 const router = express.Router();
 
 router.post('/signup', authController.signup)
+
 router.post('/signin', authController.signin)
+
+
 
 router.post('/create-permission', authMiddleware, checkPermission('create-role-permission'), authController.createPermissions)
 

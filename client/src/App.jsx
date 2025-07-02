@@ -20,7 +20,7 @@ import DashHome from './DashboardPages/DashHome/DashHome'
 
 import { useLayoutEffect } from 'react'
 
-import RolePermissions from './DashboardPages/Permissions/CreateRolePermissions'
+import RolePermissions from './DashboardPages/Permissions/RolePermissions'
 import CreateRolePermissions from './DashboardPages/Permissions/CreateRolePermissions'
 import ViewOneRole from './DashboardPages/Permissions/ViewOneRole'
 
