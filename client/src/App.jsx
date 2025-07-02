@@ -13,6 +13,7 @@ import ContactUs from './pages/ContactUs/ContactUs'
 import TestForm from './pages/Testings/TestForm'
 import NotFound from './components/Errors/NotFound'
 import Login from './pages/AuthPages/Login'
+import NEWS from './pages/NEWS/NEWS'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -67,6 +68,7 @@ function App() {
                     <Route path='/doctors' element={<Doctors /> } />
                     <Route path='/products' element={<OurProducts /> } />
                     <Route path='/contact' element={<ContactUs /> } />
+                    <Route path='/news' element={<NEWS /> } />
                     <Route path='/login' element={<Login /> } />
                 </Routes>
                 <Footer />
