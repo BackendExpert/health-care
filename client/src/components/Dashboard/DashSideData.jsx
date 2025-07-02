@@ -12,7 +12,8 @@ import {
     FaRegClipboard,
     FaUserNurse,
     FaUsers,
-    FaHospital
+    FaHospital,
+    FaUserLock
 } from "react-icons/fa6";
 
 import {
@@ -20,6 +21,8 @@ import {
     FaUserCog,
     FaUserMd
 } from "react-icons/fa";
+
+
 
 const dashsidedata = [
     {
@@ -77,19 +80,13 @@ const dashsidedata = [
         icon: FaRegClipboard
     },
     {
-        id: 10,
-        name: 'Emergency Contacts',
-        link: '/Dashboard/EmergencyContacts',
-        icon: MdContactPhone
-    },
-    {
-        id: 11,
-        name: 'System Users',
-        link: '/Dashboard/Users',
-        icon: FaUsers
-    },
-    {
         id: 12,
+        name: 'Permission',
+        link: '/Dashboard/Permissions',
+        icon: FaUserLock
+    },
+    {
+        id: 13,
         name: 'Profile',
         link: '/Dashboard/Profile',
         icon: FaUserCog

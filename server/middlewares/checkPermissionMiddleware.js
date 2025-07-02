@@ -1,6 +1,6 @@
 // checkPermissionMiddleware.js
-const User = require('../model/User');
-const Role = require('../model/Role');
+const User = require('../models/User');
+const Role = require('../models/Role');
 
 const checkPermission = (requiredPermission) => {
     return async (req, res, next) => {

@@ -19,7 +19,15 @@ import Dashboard from './components/Dashboard/Dashboard'
 import DashHome from './DashboardPages/DashHome/DashHome'
 
 import { useLayoutEffect } from 'react'
+
+import RolePermissions from './DashboardPages/Permissions/RolePermissions'
+import CreateRolePermissions from './DashboardPages/Permissions/CreateRolePermissions'
+import ViewOneRole from './DashboardPages/Permissions/ViewOneRole'
+
 import DashError from './components/Errors/DashError'
+import Patients from './DashboardPages/Patients/Patients'
+import Profile from './DashboardPages/Profile/Profile'
+import ViewPatient from './DashboardPages/Patients/ViewPatient'
 
 const AppContent = () => {
     const location = useLocation()
@@ -81,8 +89,17 @@ const AppContent = () => {
                     <Route path='/login' element={<Login />} />
 
                     <Route path='/Dashboard/' element={<PrivateRoute element={<Dashboard />} />} >
-                        <Route path='*' element={<PrivateRoute element={<DashError /> } /> } />
+                        <Route path='*' element={<PrivateRoute element={<DashError />} />} />
+
+                        <Route path='Permissions' element={<PrivateRoute element={<RolePermissions />} />} />
+                        <Route path='Create-Permissions' element={<PrivateRoute element={<CreateRolePermissions />} />} />
+                        <Route path='View-One-Role/:id' element={<PrivateRoute element={<ViewOneRole />} />} />
+
                         <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
+                        <Route path='Patients' element={<PrivateRoute element={<Patients />} />} />
+                        <Route path='ViewPatient/:id' element={<PrivateRoute element={<ViewPatient /> } /> } />
+ 
+                        <Route path='Profile' element={<PrivateRoute element={<Profile /> } /> } />
                     </Route>
                 </Routes>
 
