@@ -86,12 +86,6 @@ const dashsidedata = [
         icon: MdContactPhone
     },
     {
-        id: 11,
-        name: 'System Users',
-        link: '/Dashboard/Users',
-        icon: FaUsers
-    },
-    {
         id: 12,
         name: 'Permission',
         link: '/Dashboard/Permissions',

@@ -5,7 +5,7 @@ const userController = {
         try{
             const email = req.params.email
 
-            const getuserdata = await User.findOne({ email: email })
+            const getuserdata = await User.findOne({ email: email }).populate('roles')
 
             return res.json({ Result: getuserdata })
         }

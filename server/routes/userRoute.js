@@ -5,6 +5,6 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get('/current-userdata', authMiddleware, checkPermission('get-my-data'), userController.getcurrentuserdata)
+router.get('/current-userdata/:email', authMiddleware, checkPermission('get-my-data'), userController.getcurrentuserdata)
 
 module.exports = router;
