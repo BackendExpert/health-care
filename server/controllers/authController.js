@@ -1,9 +1,14 @@
+const Role = require("../models/Role");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
+
 const authController = {
     // signup
     signup: async (req, res) => {
         try {
             const {
-                username,
+                name,
                 email,
                 password,
             } = req.body
@@ -13,7 +18,7 @@ const authController = {
             }
             const checkUser = await User.findOne({
                 $or: [
-                    { username: username },
+                    { username: name },
                     { email: email }
                 ]
             });
@@ -22,16 +27,16 @@ const authController = {
                 return res.json({ Error: "User already exists in the system" })
             }
 
-            const getroleforsignup = await Role.findOne({ name: 'warden' })
+            const getroleforsignup = await Role.findOne({ name: 'patient'.toLowerCase() })
 
             if (!getroleforsignup) {
-                return res.json({ Error: "Default role 'warden' not found in system" });
+                return res.json({ Error: "Default role 'patient' not found in system" });
             }
 
             const hashpass = await bcrypt.hash(password, 10)
 
             const newUser = new User({
-                username: username,
+                username: name,
                 email: email,
                 password: hashpass,
                 roles: [getroleforsignup._id],

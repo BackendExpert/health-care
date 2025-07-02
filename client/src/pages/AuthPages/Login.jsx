@@ -9,8 +9,10 @@ const Login = () => {
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('/api/login', loginData)
-            alert(res.data.message || 'Login successful!')
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/auth/signin', loginData)
+            if (res.data.Status === "Success") {
+                alert(res.data.Message)
+            }
         } catch (err) {
             alert(err.response?.data?.message || 'Login failed!')
         }
@@ -18,10 +20,18 @@ const Login = () => {
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
+        console.log('Register Data:', registerData)
         try {
-            const res = await axios.post('/api/register', registerData)
-            alert(res.data.message || 'Registration successful!')
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/auth/signup', registerData)
+            console.log('Register response:', res.data)
+            if (res.data.Status === "Success") {
+                alert(res.data.Message)
+                window.location.reload()
+            } else {
+                alert('Registration failed: ' + (res.data.Error || 'Unknown error'))
+            }
         } catch (err) {
+            console.error(err)
             alert(err.response?.data?.message || 'Registration failed!')
         }
     }
