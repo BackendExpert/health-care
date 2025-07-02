@@ -26,6 +26,7 @@ import ViewOneRole from './DashboardPages/Permissions/ViewOneRole'
 
 import DashError from './components/Errors/DashError'
 import Patients from './DashboardPages/Patients/Patients'
+import Profile from './DashboardPages/Profile/Profile'
 
 const AppContent = () => {
     const location = useLocation()
@@ -95,6 +96,8 @@ const AppContent = () => {
 
                         <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
                         <Route path='Patients' element={<PrivateRoute element={<Patients />} />} />
+
+                        <Route path='Profile' element={<PrivateRoute element={<Profile /> } /> } />
                     </Route>
                 </Routes>
 

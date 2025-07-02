@@ -5,6 +5,10 @@ const PatientsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    age: {
+        type: Number,
+        required: true
+    },
     nic: {
         type: String,
         required: true
