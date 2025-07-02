@@ -22,13 +22,9 @@ const Navbar = () => {
                 {/* Desktop Menus */}
                 <div className="hidden xl:flex space-x-6">
                     {navdata.map((item) => (
-                        <Link
-                            key={item.id}
-                            to={item.link}
-                            className="text-blue-800 hover:text-blue-900 font-medium transition duration-200"
-                        >
+                        <a href={item.link} key={item.id} className="text-blue-800 hover:text-blue-900 font-medium transition duration-200">
                             {item.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
 
