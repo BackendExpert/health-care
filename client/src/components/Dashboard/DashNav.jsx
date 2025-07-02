@@ -54,7 +54,7 @@ const DashNav = () => {
                         <a href="#" className="flex items-center gap-3 px-4 py-2 rounded-lg text-blue-700 hover:bg-blue-100 transition font-medium">
                             <FaGear className="text-lg" /> Settings
                         </a>
-                        <button onClick={() => {localStorage.clear(); window.location.href='/'}}
+                        <button onClick={() => {localStorage.clear(); window.location.href='/login'}}
                             className="w-full text-left flex items-center gap-3 px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 transition font-medium">
                             <FaPowerOff className="text-lg" /> Logout
                         </button>

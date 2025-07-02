@@ -14,7 +14,6 @@ const DashSide = () => {
         ? roles.map(r => (typeof r === 'string' ? r : r.name))
         : [typeof roles === 'string' ? roles : roles?.name];
 
-    // ✅ Updated role filter
     const filteredMenu = dashsidedata.filter(item => {
         if (roleNames.includes('admin')) return true;
         if (roleNames.includes('staff')) {
@@ -61,14 +60,21 @@ const DashSide = () => {
     }, [location, filteredMenu, navigate]);
 
     return (
-        <aside className="bg-white min-h-screen p-6 border-r border-blue-100 shadow-xl rounded-r-3xl
-      overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100 hover:scrollbar-thumb-blue-500 transition-all">
+        <aside
+            className="bg-white min-h-screen p-6 border-r border-blue-100 shadow-xl rounded-r-3xl
+        overflow-y-auto transition-all scrollbar-thin-custom"
+            style={{ maxHeight: '100vh' }}
+        >
             <h2 className="text-center text-xs font-extrabold text-blue-600 tracking-widest mb-8 select-none">
                 HEALTHCARE MANAGEMENT SYSTEM
             </h2>
 
             <div className="flex items-center gap-4 bg-blue-50 text-blue-700 rounded-2xl p-4 shadow-inner mb-10">
-                <img src={DashUser} alt={`${username} avatar`} className="h-12 w-12 rounded-full border-2 border-blue-400 shadow" />
+                <img
+                    src={DashUser}
+                    alt={`${username} avatar`}
+                    className="h-12 w-12 rounded-full border-2 border-blue-400 shadow"
+                />
                 <div>
                     <h3 className="font-semibold uppercase tracking-wide">{username}</h3>
                     <p className="text-xs uppercase font-medium tracking-wider">{roleNames.join(', ')}</p>
