@@ -9,6 +9,10 @@ import AboutUs from './pages/AboutUs/AboutUs'
 import Services from './pages/Services/Services'
 import Doctors from './pages/Doctors/Doctors'
 import OurProducts from './pages/Products/OurProducts'
+import ContactUs from './pages/ContactUs/ContactUs'
+import TestForm from './pages/Testings/TestForm'
+import NotFound from './components/Errors/NotFound'
+import Login from './pages/AuthPages/Login'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -56,11 +60,14 @@ function App() {
             <div style={{ paddingTop: isDesktop && showTopNav ? 60 : 0 }}>
                 <Navbar show={showNavbar} />
                 <Routes>
+                    <Route path='*' element={<NotFound />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path='/about' element={<AboutUs /> } />
                     <Route path='/services' element={<Services />} />
                     <Route path='/doctors' element={<Doctors /> } />
                     <Route path='/products' element={<OurProducts /> } />
+                    <Route path='/contact' element={<ContactUs /> } />
+                    <Route path='/login' element={<Login /> } />
                 </Routes>
                 <Footer />
             </div>
