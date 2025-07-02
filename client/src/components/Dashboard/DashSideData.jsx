@@ -49,12 +49,12 @@ const dashsidedata = [
         link: '/Dashboard/Doctors',
         icon: FaUserMd
     },
-    {
-        id: 5,
-        name: 'Staff',
-        link: '/Dashboard/Staff',
-        icon: FaUserNurse
-    },
+    // {
+    //     id: 5,
+    //     name: 'Staff',
+    //     link: '/Dashboard/Staff',
+    //     icon: FaUserNurse
+    // },
     {
         id: 6,
         name: 'Billing',

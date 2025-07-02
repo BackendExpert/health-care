@@ -9,6 +9,10 @@ const Patients = () => {
     const [allpatients, setallpatients] = useState([])
     const [filteredPatients, setFilteredPatients] = useState([])
 
+    // pagination
+    const [currentPage, setCurrentPage] = useState(1)
+    const patientsPerPage = 15
+
     // filters
     const [nicFilter, setNicFilter] = useState("")
     const [genderFilter, setGenderFilter] = useState("All")
@@ -50,11 +54,18 @@ const Patients = () => {
         }
 
         if (nameSearch.trim()) {
-            filtered = filtered.filter(p => p.name && p.name.toLowerCase().includes(nameSearch.toLowerCase()))
+            filtered = filtered.filter(p => p.fullname && p.fullname.toLowerCase().includes(nameSearch.toLowerCase()))
         }
 
         setFilteredPatients(filtered)
+        setCurrentPage(1) // reset to first page on filter change
     }, [nicFilter, genderFilter, minAge, maxAge, nameSearch, allpatients])
+
+    // pagination calculations
+    const indexOfLastPatient = currentPage * patientsPerPage
+    const indexOfFirstPatient = indexOfLastPatient - patientsPerPage
+    const currentPatients = filteredPatients.slice(indexOfFirstPatient, indexOfLastPatient)
+    const totalPages = Math.ceil(filteredPatients.length / patientsPerPage)
 
     return (
         <div>
@@ -139,10 +150,10 @@ const Patients = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {filteredPatients.length > 0 ? (
-                                filteredPatients.map((data, index) => (
+                            {currentPatients.length > 0 ? (
+                                currentPatients.map((data, index) => (
                                     <tr key={index} className="hover:bg-blue-50 transition-all duration-150">
-                                        <td className="px-6 py-4 font-medium text-gray-800">{index + 1}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-800">{indexOfFirstPatient + index + 1}</td>
                                         <td className="px-6 py-4">{data.nic}</td>
                                         <td className="px-6 py-4">{data.fullname}</td>
                                         <td className="px-6 py-4">{data.age}</td>
@@ -166,6 +177,27 @@ const Patients = () => {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Pagination */}
+                <div className="flex justify-between items-center mt-6">
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className={`px-4 py-2 rounded-xl font-semibold ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                    >
+                        Previous
+                    </button>
+                    <div className="text-gray-600">
+                        Page {currentPage} of {totalPages || 1}
+                    </div>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages || totalPages === 0}
+                        className={`px-4 py-2 rounded-xl font-semibold ${currentPage === totalPages || totalPages === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </div>
