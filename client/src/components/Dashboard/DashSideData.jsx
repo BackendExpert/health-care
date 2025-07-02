@@ -80,12 +80,6 @@ const dashsidedata = [
         icon: FaRegClipboard
     },
     {
-        id: 10,
-        name: 'Emergency Contacts',
-        link: '/Dashboard/EmergencyContacts',
-        icon: MdContactPhone
-    },
-    {
         id: 12,
         name: 'Permission',
         link: '/Dashboard/Permissions',
