@@ -8,15 +8,21 @@ const Login = () => {
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
+        console.log('Login Data:', loginData)
         try {
             const res = await axios.post(import.meta.env.VITE_APP_API + '/auth/signin', loginData)
+            console.log('Login response:', res.data)
             if (res.data.Status === "Success") {
                 alert(res.data.Message)
+            } else {
+                alert('Login failed: ' + (res.data.Error || 'Unknown error'))
             }
         } catch (err) {
+            console.error(err)
             alert(err.response?.data?.message || 'Login failed!')
         }
     }
+
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
