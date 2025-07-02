@@ -3,10 +3,14 @@ import axios from 'axios';
 import DefaultInput from '../../components/Form/DefaultInput';
 import Dropdown from '../../components/Form/Dropdown';
 import DefaultBtn from '../../components/Buttons/DefultBtn';
+import secureLocalStorage from 'react-secure-storage';
+
 
 const AddDoctor = () => {
     const token = secureLocalStorage.getItem('login')
     const [formData, setFormData] = useState({
+        username: '',
+        email: '',
         exp: '',
         contactInfo: '',
         landline: '',
@@ -26,11 +30,11 @@ const AddDoctor = () => {
                     'Authorization': `Bearer ${token}`,
                 },
             })
-            if(res.data.Status === "Success"){
+            if (res.data.Status === "Success") {
                 alert(res.data.Message)
                 window.location.reload()
             }
-            else{
+            else {
                 alert(res.data.Error)
             }
         }
@@ -47,6 +51,26 @@ const AddDoctor = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-3 gap-4">
+                    <DefaultInput
+                        label="Email Address"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="Enter Email Address"
+                    />
+
+                    <DefaultInput
+                        label="Username"
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                        placeholder="Enter Username"
+                    />
+                    
                     <DefaultInput
                         label="Experience (Years)"
                         type="number"

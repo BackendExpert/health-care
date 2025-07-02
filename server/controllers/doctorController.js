@@ -1,7 +1,11 @@
+const User = require("../models/User");
+
 const doctorController = {
     createDoctor: async (req, res) => {
         try {
             const {
+                username,
+                email,
                 exp,
                 contactInfo,
                 landline,
@@ -9,7 +13,20 @@ const doctorController = {
                 section,
             } = req.body
 
-            const 
+            const checkUser = await User.findOne({
+                $or: [
+                    { username: username },
+                    { email: email }
+                ]
+            });
+
+            if (checkUser) {
+                return res.json({ Error: "User already exists in the system" })
+            }
+
+            
+
+
         }
         catch (err) {
             console.log(err)
