@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './App.css'
 import HomePage from './pages/HomePage/HomePage'
@@ -14,8 +14,17 @@ import TestForm from './pages/Testings/TestForm'
 import NotFound from './components/Errors/NotFound'
 import Login from './pages/AuthPages/Login'
 import NEWS from './pages/NEWS/NEWS'
+import PrivateRoute from './components/Auth/PrivateRoute'
+import Dashboard from './components/Dashboard/Dashboard'
+import DashHome from './DashboardPages/DashHome/DashHome'
 
-function App() {
+import { useLayoutEffect } from 'react'
+import DashError from './components/Errors/DashError'
+
+const AppContent = () => {
+    const location = useLocation()
+    const isDashboard = location.pathname.startsWith('/Dashboard')
+
     const [showTopNav, setShowTopNav] = useState(false)
     const [showNavbar, setShowNavbar] = useState(true)
     const [lastScrollY, setLastScrollY] = useState(0)
@@ -26,7 +35,7 @@ function App() {
             setIsDesktop(window.innerWidth >= 768)
         }
         window.addEventListener('resize', handleResize)
-        handleResize() // initial check
+        handleResize()
 
         return () => window.removeEventListener('resize', handleResize)
     }, [])
@@ -48,7 +57,6 @@ function App() {
             setLastScrollY(window.scrollY)
         }
 
-        // Check once on mount
         checkScroll()
 
         window.addEventListener('scroll', checkScroll)
@@ -56,23 +64,38 @@ function App() {
     }, [lastScrollY, isDesktop])
 
     return (
-        <BrowserRouter>
-            {isDesktop && <TopNav show={showTopNav} />}
-            <div style={{ paddingTop: isDesktop && showTopNav ? 60 : 0 }}>
-                <Navbar show={showNavbar} />
+        <>
+            {!isDashboard && isDesktop && <TopNav show={showTopNav} />}
+            <div style={{ paddingTop: !isDashboard && isDesktop && showTopNav ? 60 : 0 }}>
+                {!isDashboard && <Navbar show={showNavbar} />}
+
                 <Routes>
                     <Route path='*' element={<NotFound />} />
                     <Route path="/" element={<HomePage />} />
-                    <Route path='/about' element={<AboutUs /> } />
+                    <Route path='/about' element={<AboutUs />} />
                     <Route path='/services' element={<Services />} />
-                    <Route path='/doctors' element={<Doctors /> } />
-                    <Route path='/products' element={<OurProducts /> } />
-                    <Route path='/contact' element={<ContactUs /> } />
-                    <Route path='/news' element={<NEWS /> } />
-                    <Route path='/login' element={<Login /> } />
+                    <Route path='/doctors' element={<Doctors />} />
+                    <Route path='/products' element={<OurProducts />} />
+                    <Route path='/contact' element={<ContactUs />} />
+                    <Route path='/news' element={<NEWS />} />
+                    <Route path='/login' element={<Login />} />
+
+                    <Route path='/Dashboard/' element={<PrivateRoute element={<Dashboard />} />} >
+                        <Route path='*' element={<PrivateRoute element={<DashError /> } /> } />
+                        <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
+                    </Route>
                 </Routes>
-                <Footer />
+
+                {!isDashboard && <Footer />}
             </div>
+        </>
+    )
+}
+
+function App() {
+    return (
+        <BrowserRouter>
+            <AppContent />
         </BrowserRouter>
     )
 }

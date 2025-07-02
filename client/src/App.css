@@ -1,0 +1,21 @@
+/* scrollbar.css */
+
+.scrollbar-thin-custom::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin-custom::-webkit-scrollbar-thumb {
+  background-color: #3b82f6;
+  /* Tailwind blue-500 */
+  border-radius: 9999px;
+}
+
+.scrollbar-thin-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox */
+.scrollbar-thin-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
+}

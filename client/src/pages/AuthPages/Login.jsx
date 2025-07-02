@@ -1,27 +1,49 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import secureLocalStorage from 'react-secure-storage'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('login')
     const [loginData, setLoginData] = useState({ email: '', password: '' })
     const [registerData, setRegisterData] = useState({ name: '', email: '', password: '' })
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
+        console.log('Login Data:', loginData)
         try {
-            const res = await axios.post('/api/login', loginData)
-            alert(res.data.message || 'Login successful!')
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/auth/signin', loginData)
+            console.log('Login response:', res.data)
+            if (res.data.Status === "Success") {
+                alert(res.data.Message)
+                secureLocalStorage.setItem('login', res.data.Token);
+                secureLocalStorage.setItem('dashmenuID', 1);
+                navigate('/Dashboard/Home');
+            } else {
+                alert('Login failed: ' + (res.data.Error || 'Unknown error'))
+            }
         } catch (err) {
+            console.error(err)
             alert(err.response?.data?.message || 'Login failed!')
         }
     }
 
+
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
+        console.log('Register Data:', registerData)
         try {
-            const res = await axios.post('/api/register', registerData)
-            alert(res.data.message || 'Registration successful!')
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/auth/signup', registerData)
+            console.log('Register response:', res.data)
+            if (res.data.Status === "Success") {
+                alert(res.data.Message)
+                window.location.reload()
+            } else {
+                alert('Registration failed: ' + (res.data.Error || 'Unknown error'))
+            }
         } catch (err) {
+            console.error(err)
             alert(err.response?.data?.message || 'Registration failed!')
         }
     }
