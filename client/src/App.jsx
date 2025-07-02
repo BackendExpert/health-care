@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer'
 import Navbar from './components/Nav/Navbar'
 import TopNav from './components/Nav/TopNav'
 import AboutUs from './pages/AboutUs/AboutUs'
+import Services from './pages/Services/Services'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -55,6 +56,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path='/about' element={<AboutUs /> } />
+                    <Route path='/services' element={<Services />} />
                 </Routes>
                 <Footer />
             </div>
