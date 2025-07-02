@@ -20,6 +20,7 @@ import DashHome from './DashboardPages/DashHome/DashHome'
 
 import { useLayoutEffect } from 'react'
 import DashError from './components/Errors/DashError'
+import Patients from './DashboardPages/Patients/Patients'
 
 const AppContent = () => {
     const location = useLocation()
@@ -83,6 +84,7 @@ const AppContent = () => {
                     <Route path='/Dashboard/' element={<PrivateRoute element={<Dashboard />} />} >
                         <Route path='*' element={<PrivateRoute element={<DashError /> } /> } />
                         <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
+                        <Route path='Patients' element={<PrivateRoute element={<Patients /> } /> } />
                     </Route>
                 </Routes>
 
