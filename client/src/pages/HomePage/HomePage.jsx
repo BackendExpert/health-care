@@ -3,6 +3,7 @@ import Slider from '../../components/ImageSliders/Slider'
 import OurServices from './OurServices'
 import DataCount from './DataCount'
 import HotProducts from './HotProducts'
+import NEWS from './NEWS'
 
 const HomePage = () => {
     return (
@@ -11,6 +12,7 @@ const HomePage = () => {
             <OurServices />
             <DataCount />
             <HotProducts />
+            <NEWS />
         </div>
     )
 }
