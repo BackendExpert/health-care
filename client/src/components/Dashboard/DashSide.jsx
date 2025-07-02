@@ -29,7 +29,7 @@ const DashSide = () => {
             ].includes(item.name);
         }
         if (roleNames.includes('doctor')) {
-            return !['System Users', 'Staff'].includes(item.name);
+            return !['System Users', 'Staff', 'Permission'].includes(item.name);
         }
         if (roleNames.includes('patient')) {
             return [
