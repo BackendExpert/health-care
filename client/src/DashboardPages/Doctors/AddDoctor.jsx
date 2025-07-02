@@ -5,6 +5,7 @@ import Dropdown from '../../components/Form/Dropdown';
 import DefaultBtn from '../../components/Buttons/DefultBtn';
 
 const AddDoctor = () => {
+    const token = secureLocalStorage.getItem('login')
     const [formData, setFormData] = useState({
         exp: '',
         contactInfo: '',
@@ -13,14 +14,29 @@ const AddDoctor = () => {
         section: ''
     });
 
-    const [message, setMessage] = useState('');
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const res = await axios.post(import.meta.env.VITE_APP_API + '/doctor/create-doctor', formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            })
+            if(res.data.Status === "Success"){
+                alert(res.data.Message)
+                window.location.reload()
+            }
+            else{
+                alert(res.data.Error)
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
     };
 
     return (
@@ -31,8 +47,6 @@ const AddDoctor = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-3 gap-4">
-
-
                     <DefaultInput
                         label="Experience (Years)"
                         type="number"
