@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage/HomePage'
 import Footer from './components/Footer/Footer'
 import Navbar from './components/Nav/Navbar'
 import TopNav from './components/Nav/TopNav'
+import AboutUs from './pages/AboutUs/AboutUs'
 
 function App() {
     const [showTopNav, setShowTopNav] = useState(false)
@@ -45,7 +46,7 @@ function App() {
         window.addEventListener('scroll', checkScroll)
         return () => window.removeEventListener('scroll', checkScroll)
     }, [lastScrollY, isDesktop])
-    
+
     return (
         <BrowserRouter>
             {isDesktop && <TopNav show={showTopNav} />}
@@ -53,6 +54,7 @@ function App() {
                 <Navbar show={showNavbar} />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path='/about' element={<AboutUs /> } />
                 </Routes>
                 <Footer />
             </div>
