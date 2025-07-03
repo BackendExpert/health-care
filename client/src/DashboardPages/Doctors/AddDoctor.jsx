@@ -4,9 +4,11 @@ import DefaultInput from '../../components/Form/DefaultInput';
 import Dropdown from '../../components/Form/Dropdown';
 import DefaultBtn from '../../components/Buttons/DefultBtn';
 import secureLocalStorage from 'react-secure-storage';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddDoctor = () => {
+    const navigate = useNavigate()
     const token = secureLocalStorage.getItem('login')
     const [formData, setFormData] = useState({
         username: '',
@@ -32,7 +34,7 @@ const AddDoctor = () => {
             })
             if (res.data.Status === "Success") {
                 alert(res.data.Message)
-                window.location.reload()
+                navigate('/Dashboard/Doctors', { replace: true })
             }
             else {
                 alert(res.data.Error)
@@ -70,7 +72,7 @@ const AddDoctor = () => {
                         required
                         placeholder="Enter Username"
                     />
-                    
+
                     <DefaultInput
                         label="Experience (Years)"
                         type="number"

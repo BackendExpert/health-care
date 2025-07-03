@@ -3,6 +3,8 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const Role = require("../models/Role");
 const Doctor = require("../models/Doctor");
+const transporter = require('../utils/emailTransporter');
+
 
 const doctorController = {
     createDoctor: async (req, res) => {
@@ -58,16 +60,16 @@ const doctorController = {
                     const mailOptions = {
                         from: process.env.EMAIL_USER,
                         to: email,
-                        subject: 'Your Doctor Account at University of Peradeniya',
+                        subject: 'Your Doctor Account at MyHealthCare',
                         html: `
                         <p>Dear ${username},</p>
-                        <p>Thank you for registering at the University of Peradeniya Hospital Management System.</p>
+                        <p>Thank you for registering at the MyHealthCare</p>
                         <p>Here are your login credentials:</p>
                         <ul>
                             <li><strong>Username:</strong> ${username}</li>
                             <li><strong>Password:</strong> ${randomPassword}</li>
                         </ul>
-                        <p>Please wait until your account is activated by an administrator. You will be notified once it is active.</p>
+                        <p>Please Login with our email and this password and update the Password ASPS.</p>
                         <br>
                         <p style="color:gray;">Do not share these credentials with anyone.</p>
                     `,

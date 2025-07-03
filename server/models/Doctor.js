@@ -29,6 +29,6 @@ const DoctorSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Doctor = mongoose.model('ModelName', DoctorSchema);
+const Doctor = mongoose.model('Doctor', DoctorSchema);
 
 module.exports = Doctor;
