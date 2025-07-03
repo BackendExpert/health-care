@@ -49,24 +49,24 @@ const dashsidedata = [
         link: '/Dashboard/Doctors',
         icon: FaUserMd
     },
-    {
-        id: 5,
-        name: 'Staff',
-        link: '/Dashboard/Staff',
-        icon: FaUserNurse
-    },
+    // {
+    //     id: 5,
+    //     name: 'Staff',
+    //     link: '/Dashboard/Staff',
+    //     icon: FaUserNurse
+    // },
     {
         id: 6,
         name: 'Billing',
         link: '/Dashboard/Billing',
         icon: FaFileInvoiceDollar
     },
-    {
-        id: 7,
-        name: 'Payment',
-        link: '/Dashboard/Payment',
-        icon: MdPayment
-    },
+    // {
+    //     id: 7,
+    //     name: 'Payment',
+    //     link: '/Dashboard/Payment',
+    //     icon: MdPayment
+    // },
     {
         id: 8,
         name: 'Pharmacy',
