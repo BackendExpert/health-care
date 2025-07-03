@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.post('/create-appoinment', authMiddleware, checkPermission('create-appoinment'), AppoinmentController.createAppoinment)
 
+router.get('/get-doctors', authMiddleware, checkPermission('get-doctors-to-appoinment'), AppoinmentController.getdoctor)
+
 router.get('/all-appoinments', authMiddleware, checkPermission('all-appoinments'), AppoinmentController.getallappoiments)
 
 router.get('/one-appoinment/:id', authMiddleware, checkPermission('one-appoinment'), AppoinmentController.getoneappoinment)

@@ -1,4 +1,6 @@
 const Appoinment = require("../models/Appoinment");
+const Role = require("../models/Role");
+const User = require("../models/User");
 
 const AppoinmentController = {
     createAppoinment: async (req, res) => {
@@ -32,6 +34,19 @@ const AppoinmentController = {
             }
         }
         catch (err) {
+            console.log(err)
+        }
+    },
+
+    getdoctor: async(req, res) => {
+        try{
+            const getroledc = await Role.findOne({ name: 'doctor' })
+
+            const docotors = await User.find({ roles: getroledc._id })
+
+            return res.json({ Result: docotors })
+        }
+        catch(err){
             console.log(err)
         }
     },
