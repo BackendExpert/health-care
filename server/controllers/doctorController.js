@@ -105,6 +105,19 @@ const doctorController = {
         catch(err){
             console.log(err)
         }
+    },
+
+    viewdoctorbyid: async(req, res) => {
+        try{
+            const id = req.params.id
+
+            const getdoctor = await Doctor.findById(id)
+
+            return res.json({ Result: getdoctor })
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
 };

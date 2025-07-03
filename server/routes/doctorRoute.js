@@ -9,4 +9,6 @@ router.post('/create-doctor', authMiddleware, checkPermission('create-doctor'), 
 
 router.get('/all-doctors', authMiddleware, checkPermission('get-alldoctors'), doctorController.getalldoctors)
 
+router.get('/view-doctor/:id', authMiddleware, checkPermission('view-doctor'), doctorController.viewdoctorbyid)
+
 module.exports = router;
