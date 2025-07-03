@@ -5,6 +5,7 @@ import { getUserInfoFromToken } from '../../utils/auth'
 import axios from 'axios'
 import DefaultBtn from '../../components/Buttons/DefultBtn'
 import UpdatePatientInfor from './UpdatePatientInfor'
+import UpdatePass from './UpdatePass'
 
 const Profile = () => {
     const userInfo = getUserInfoFromToken()
@@ -78,6 +79,9 @@ const Profile = () => {
                         :
                         <div className=""></div>
                 }
+            </div>
+            <div className="">
+                <UpdatePass />
             </div>
         </div>
     )
