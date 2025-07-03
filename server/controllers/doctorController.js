@@ -1,4 +1,8 @@
 const User = require("../models/User");
+const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const Role = require("../models/Role");
+const Doctor = require("../models/Doctor");
 
 const doctorController = {
     createDoctor: async (req, res) => {
@@ -24,14 +28,72 @@ const doctorController = {
                 return res.json({ Error: "User already exists in the system" })
             }
 
-            
+            const randomPassword = crypto.randomBytes(4).toString('hex');
+            const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
+            const getroleID = await Role.findOne({ name: 'doctor' });
 
-        }
-        catch (err) {
+            const createuseracc = new User({
+                username: username,
+                email: email,
+                password: hashedPassword,
+                roles: getroleID._id
+            })
+
+            const resultUserAcc = await createuseracc.save()
+
+            if (resultUserAcc) {
+                const createdoctor = new Doctor({
+                    name: username,
+                    exp: exp,
+                    contactInfo: contactInfo,
+                    landline: landline,
+                    hospital: hospital,
+                    section: section
+                })
+
+                const resultCreateDoctor = await createdoctor.save()
+
+                if (resultCreateDoctor) {
+                    const mailOptions = {
+                        from: process.env.EMAIL_USER,
+                        to: email,
+                        subject: 'Your Doctor Account at University of Peradeniya',
+                        html: `
+                        <p>Dear ${username},</p>
+                        <p>Thank you for registering at the University of Peradeniya Hospital Management System.</p>
+                        <p>Here are your login credentials:</p>
+                        <ul>
+                            <li><strong>Username:</strong> ${username}</li>
+                            <li><strong>Password:</strong> ${randomPassword}</li>
+                        </ul>
+                        <p>Please wait until your account is activated by an administrator. You will be notified once it is active.</p>
+                        <br>
+                        <p style="color:gray;">Do not share these credentials with anyone.</p>
+                    `,
+                    };
+
+                    transporter.sendMail(mailOptions, (err, info) => {
+                        if (err) {
+                            console.log(err);
+                            return res.json({
+                                Error: "Account created but failed to send email."
+                            });
+                        }
+                        return res.json({
+                            Status: "Success",
+                            Message: "Doctor Account Created Successfully. Login credentials have been emailed."
+                        });
+                    });
+                }
+            }
+
+        } catch (err) {
             console.log(err)
+            return res.json({ Error: "An error occurred while creating the doctor account." })
         }
     }
+
 };
 
 module.exports = doctorController;
