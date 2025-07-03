@@ -203,6 +203,48 @@ const authController = {
         catch (err) {
             console.log(err)
         }
+    },
+
+    updatepassviadash: async (req, res) => {
+        try {
+            const token = req.header('Authorization');
+            if (!token || !token.startsWith('Bearer ')) {
+                return res.json({ Error: "Missing or invalid token" });
+            }
+
+            const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+            const tokenEmail = decoded.email;
+
+            const {
+                currentpass,
+                newpass,
+            } = req.body
+
+            const getuser = await User.findOne({ email: tokenEmail })
+
+            const checkcurrentpass = await bcrypt.compare(currentpass, getuser.password)
+
+            if (!checkcurrentpass) {
+                return res.json({ Error: "Current Password not match" })
+            }
+
+            const hashnewpass = await bcrypt.hash(newpass, 10)
+
+            const updatedUser = await User.findOneAndUpdate(
+                { email: tokenEmail },
+                { password: hashnewpass },
+                { new: true }
+            )
+
+            res.json({
+                Status: "Success",
+                message: "Password updated successfully"
+            });
+
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
 
