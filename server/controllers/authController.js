@@ -213,32 +213,33 @@ const authController = {
             }
 
             const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
-            const tokenEmail = decoded.email;
+            const tokenID = decoded.id;
 
             const {
                 currentpass,
                 newpass,
             } = req.body
 
-            const getuser = await User.findOne({ email: tokenEmail })
-
-            const checkcurrentpass = await bcrypt.compare(currentpass, getuser.password)
-
-            if (!checkcurrentpass) {
-                return res.json({ Error: "Current Password not match" })
+            const getuser = await User.findById(tokenID);
+            if (!getuser) {
+                return res.json({ Error: "User not found" });
             }
 
+            const checkcurrentpass = await bcrypt.compare(currentpass, getuser.password);
+            if (!checkcurrentpass) {
+                return res.json({ Error: "Current Password not match" });
+            }
             const hashnewpass = await bcrypt.hash(newpass, 10)
 
             const updatedUser = await User.findOneAndUpdate(
-                { email: tokenEmail },
+                { _id: tokenID },
                 { password: hashnewpass },
                 { new: true }
             )
 
             res.json({
                 Status: "Success",
-                message: "Password updated successfully"
+                Message: "Password updated successfully"
             });
 
         }

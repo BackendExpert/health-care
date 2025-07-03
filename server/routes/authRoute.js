@@ -19,4 +19,8 @@ router.get('/view-one-role/:id', authMiddleware, checkPermission('view-one-role-
 
 router.post('/delete-role-permission', authMiddleware, checkPermission('delete-role-permission'), authController.deleteRolePermission)
 
+
+router.post('/update-password-dash', authMiddleware, checkPermission('update-passvia-dash'), authController.updatepassviadash)
+
+
 module.exports = router;
