@@ -37,7 +37,7 @@ const PatientAppoinments = () => {
         if (search.trim() !== '') {
             filtered = filtered.filter(app =>
                 (app.userID?.username?.toLowerCase().includes(search.toLowerCase()) ||
-                 app.doctorID?.username?.toLowerCase().includes(search.toLowerCase()))
+                    app.doctorID?.username?.toLowerCase().includes(search.toLowerCase()))
             )
         }
 
@@ -52,11 +52,40 @@ const PatientAppoinments = () => {
         setCurrentPage(1)
     }, [search, dateFilter, allappoinemts])
 
-    // get current page appointments
+    // Assign number per date (order of appointment within that date)
+    const assignNumbersPerDate = (appointments) => {
+        // Group appointments by date string 'YYYY-MM-DD'
+        const grouped = appointments.reduce((acc, app) => {
+            const dateKey = new Date(app.AppoinmentData).toISOString().split('T')[0]
+            if (!acc[dateKey]) acc[dateKey] = []
+            acc[dateKey].push(app)
+            return acc
+        }, {})
+
+        // Sort each group by datetime ascending and assign number starting at 1
+        Object.values(grouped).forEach(group => {
+            group.sort((a, b) => new Date(a.AppoinmentData) - new Date(b.AppoinmentData))
+            group.forEach((app, index) => {
+                app.number = index + 1
+            })
+        })
+
+        // Return appointments array with 'number' property set
+        return appointments.map(app => {
+            const dateKey = new Date(app.AppoinmentData).toISOString().split('T')[0]
+            const group = grouped[dateKey]
+            return group.find(a => a._id === app._id)
+        })
+    }
+
+    // Apply numbering to filtered appointments
+    const numberedAppointments = assignNumbersPerDate(filteredAppoinemts)
+
+    // Pagination
     const indexOfLast = currentPage * appoinmentsPerPage
     const indexOfFirst = indexOfLast - appoinmentsPerPage
-    const currentAppoinments = filteredAppoinemts.slice(indexOfFirst, indexOfLast)
-    const totalPages = Math.ceil(filteredAppoinemts.length / appoinmentsPerPage)
+    const currentAppoinments = numberedAppointments.slice(indexOfFirst, indexOfLast)
+    const totalPages = Math.ceil(numberedAppointments.length / appoinmentsPerPage)
 
     return (
         <div>
@@ -113,6 +142,7 @@ const PatientAppoinments = () => {
                             <th className="px-6 py-4 font-semibold tracking-wider">#</th>
                             <th className="px-6 py-4 font-semibold tracking-wider">Doctor</th>
                             <th className="px-6 py-4 font-semibold tracking-wider">Date</th>
+                            <th className="px-6 py-4 font-semibold tracking-wider">Number</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -128,6 +158,7 @@ const PatientAppoinments = () => {
                                             ? new Date(app.AppoinmentData).toLocaleDateString()
                                             : 'N/A'}
                                     </td>
+                                    <td className="px-6 py-4">{app.number}</td>
                                 </tr>
                             ))
                         ) : (

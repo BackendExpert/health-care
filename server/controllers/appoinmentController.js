@@ -91,12 +91,13 @@ const AppoinmentController = {
 
             const myappoinemts = await Appoinment.find({ userID: tokenID })
                 .populate('doctorID')
+                .sort({ AppoinmentData: 1 });
 
             if (myappoinemts.length === 0) {
-                return res.json({ Error: "No Appoiments Found" })
+                return res.json({ Error: "No Appoiments Found" });
             }
 
-            return res.json({ Result: myappoinemts })
+            return res.json({ Result: myappoinemts });
         }
         catch (err) {
             console.log(err)
