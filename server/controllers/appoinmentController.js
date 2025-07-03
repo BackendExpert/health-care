@@ -1,6 +1,8 @@
 const Appoinment = require("../models/Appoinment");
 const Role = require("../models/Role");
 const User = require("../models/User");
+const jwt = require('jsonwebtoken')
+
 
 const AppoinmentController = {
     createAppoinment: async (req, res) => {
@@ -15,13 +17,13 @@ const AppoinmentController = {
 
             const {
                 doctorID,
-                date,
+                AppoinmentData,
             } = req.body
 
             const newAppoinment = new Appoinment({
                 userID: tokenID,
                 doctorID: doctorID,
-                AppoinmentData: date
+                AppoinmentData: AppoinmentData
             })
 
             const resultAppoinment = await newAppoinment.save()
