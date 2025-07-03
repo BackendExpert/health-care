@@ -1,3 +1,5 @@
+const Appoinment = require("../models/Appoinment");
+
 const AppoinmentController = {
     createAppoinment: async (req, res) => {
         try {
@@ -14,9 +16,20 @@ const AppoinmentController = {
                 date,
             } = req.body
 
-            
+            const newAppoinment = new Appoinment({
+                userID: tokenID,
+                doctorID: doctorID,
+                AppoinmentData: date
+            })
 
+            const resultAppoinment = await newAppoinment.save()
 
+            if(resultAppoinment){
+                return res.json({ Status: "Success", Message: "Appoinment Created Success"})
+            }
+            else{
+                return res.json({ Error: "Internal Server Error"})
+            }
         }
         catch (err) {
             console.log(err)
