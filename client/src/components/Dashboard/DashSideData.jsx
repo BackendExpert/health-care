@@ -61,12 +61,12 @@ const dashsidedata = [
         link: '/Dashboard/Billing',
         icon: FaFileInvoiceDollar
     },
-    {
-        id: 7,
-        name: 'Payment',
-        link: '/Dashboard/Payment',
-        icon: MdPayment
-    },
+    // {
+    //     id: 7,
+    //     name: 'Payment',
+    //     link: '/Dashboard/Payment',
+    //     icon: MdPayment
+    // },
     {
         id: 8,
         name: 'Pharmacy',

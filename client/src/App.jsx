@@ -31,6 +31,7 @@ import ViewPatient from './DashboardPages/Patients/ViewPatient'
 
 import DoctorsDash from './DashboardPages/Doctors/Doctors'
 import AddDoctor from './DashboardPages/Doctors/AddDoctor'
+import ViewDoctor from './DashboardPages/Doctors/ViewDoctor'
 
 const AppContent = () => {
     const location = useLocation()
@@ -104,7 +105,8 @@ const AppContent = () => {
 
                         <Route path='Doctors' element={<PrivateRoute element={<DoctorsDash /> } /> } />
                         <Route path='AddDoctor' element={<PrivateRoute element={<AddDoctor /> } /> } />
- 
+                        <Route path='ViewDoctor/:id' element={<PrivateRoute element={<ViewDoctor /> } /> } />
+
                         <Route path='Profile' element={<PrivateRoute element={<Profile /> } /> } />
                     </Route>
                 </Routes>

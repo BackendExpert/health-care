@@ -94,6 +94,17 @@ const doctorController = {
             console.log(err)
             return res.json({ Error: "An error occurred while creating the doctor account." })
         }
+    },
+
+    getalldoctors: async(req, res) => {
+        try{
+            const alldoctors = await Doctor.find()
+
+            return res.json({ Result: alldoctors })
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
 };

@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post('/create-doctor', authMiddleware, checkPermission('create-doctor'), doctorController.createDoctor)
 
+router.get('/all-doctors', authMiddleware, checkPermission('get-alldoctors'), doctorController.getalldoctors)
+
 module.exports = router;
