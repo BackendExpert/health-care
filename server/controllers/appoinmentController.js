@@ -105,6 +105,7 @@ const AppoinmentController = {
             console.log(err)
         }
     }
+
 };
 
 module.exports = AppoinmentController;  
