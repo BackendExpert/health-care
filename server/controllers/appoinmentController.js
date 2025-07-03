@@ -40,15 +40,15 @@ const AppoinmentController = {
         }
     },
 
-    getdoctor: async(req, res) => {
-        try{
+    getdoctor: async (req, res) => {
+        try {
             const getroledc = await Role.findOne({ name: 'doctor' })
 
             const docotors = await User.find({ roles: getroledc._id })
 
             return res.json({ Result: docotors })
         }
-        catch(err){
+        catch (err) {
             console.log(err)
         }
     },
@@ -56,6 +56,8 @@ const AppoinmentController = {
     getallappoiments: async (req, res) => {
         try {
             const allappoinemtns = await Appoinment.find()
+                .populate('userID')
+                .populate('doctorID')
 
             return res.json({ Result: allappoinemtns })
         }
@@ -88,9 +90,10 @@ const AppoinmentController = {
             const tokenID = decoded.id;
 
             const myappoinemts = await Appoinment.find({ userID: tokenID })
+                .populate('doctorID')
 
-            if(myappoinemts.length  === 0){
-                return res.json({ Error: "No Appoiments Found"})
+            if (myappoinemts.length === 0) {
+                return res.json({ Error: "No Appoiments Found" })
             }
 
             return res.json({ Result: myappoinemts })
@@ -100,8 +103,8 @@ const AppoinmentController = {
         }
     },
 
-    doctorappoinmets: async(req, res) => {
-        try{
+    doctorappoinmets: async (req, res) => {
+        try {
             const token = req.header('Authorization');
             if (!token || !token.startsWith('Bearer ')) {
                 return res.json({ Error: "Missing or invalid token" });
@@ -109,16 +112,16 @@ const AppoinmentController = {
 
             const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
             const tokenID = decoded.id;
-            
+
             const appoimentdoctor = await Appoinment.find({ doctorID: tokenID })
 
-            if(appoimentdoctor.length === 0){
-                return res.json({ Error: "No Appoinments found"})
+            if (appoimentdoctor.length === 0) {
+                return res.json({ Error: "No Appoinments found" })
             }
-            
-            return res.json({ Result: appoimentdoctor})
+
+            return res.json({ Result: appoimentdoctor })
         }
-        catch(err){
+        catch (err) {
             console.log(err)
         }
     }
