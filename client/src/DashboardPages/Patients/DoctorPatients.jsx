@@ -153,7 +153,7 @@ const DoctorPatients = () => {
                                 <td className="px-6 py-4">{item.userID?.gender || '-'}</td>
                                 <td className="px-6 py-4">
                                     <div className="flex">
-                                        <Link to={`/doctor/view-history/${item.userID?._id}`} className="text-blue-600 hover:underline">
+                                        <Link to={`/Dashboard/view-history/${item.userID?._id}`} className="text-blue-600 hover:underline">
                                             View
                                         </Link>
                                         <button

@@ -35,6 +35,7 @@ import Appointments from './DashboardPages/Appointments/Appointments'
 import CreateAppoinment from './DashboardPages/Appointments/CreateAppoinment'
 import ViewHistory from './DashboardPages/Appointments/ViewHistory'
 import Patients from './DashboardPages/Patients/Patients'
+import ViewHistoryP from './DashboardPages/Patients/ViewHistoryP'
 
 const AppContent = () => {
     const location = useLocation()
@@ -105,6 +106,7 @@ const AppContent = () => {
                         <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
                         <Route path='Patients' element={<PrivateRoute element={<Patients />} />} />
                         <Route path='ViewPatient/:id' element={<PrivateRoute element={<ViewPatient /> } /> } />
+                        <Route path='view-history/:id' element={<PrivateRoute element={<ViewHistoryP /> } /> } />
 
                         <Route path='Doctors' element={<PrivateRoute element={<DoctorsDash /> } /> } />
                         <Route path='AddDoctor' element={<PrivateRoute element={<AddDoctor /> } /> } />
