@@ -13,4 +13,6 @@ router.get('/view-doctor/:id', authMiddleware, checkPermission('view-doctor'), d
 
 router.get('/mypatients', authMiddleware, checkPermission('my-patients-doctor'), doctorController.mypatients)
 
+router.post('/update-remark/:id', authMiddleware, checkPermission('update-remarks'), doctorController.addremak)
+
 module.exports = router;

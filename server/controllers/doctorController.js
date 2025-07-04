@@ -140,6 +140,34 @@ const doctorController = {
         catch (err) {
             console.log(err)
         }
+    },
+
+    addremak: async (req, res) => {
+        try {
+            const {
+                nextDate,
+                remark
+            } = req.body
+
+            const patientID = req.params.id
+
+            const newRemarks = await PatientHistory.findOneAndUpdate(
+                { userID: patientID },
+                { remark, nextDate },  
+                { new: true }          
+            );
+
+            if(newRemarks){
+                return res.json({ Status: "Success", Message: "Remark and Next Date Added Success"})
+            }
+            else{
+                return res.json({ Error: "Internal Server Error"})
+            }
+
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
 };
