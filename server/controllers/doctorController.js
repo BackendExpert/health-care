@@ -6,7 +6,7 @@ const Doctor = require("../models/Doctor");
 const transporter = require('../utils/emailTransporter');
 const Patients = require("../models/Patient");
 const PatientHistory = require("../models/PatientHistory");
-
+const jwt = require("jsonwebtoken")
 
 const doctorController = {
     createDoctor: async (req, res) => {
@@ -132,7 +132,7 @@ const doctorController = {
             const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
             const tokenID = decoded.id;
 
-            const findpatientall = await PatientHistory.find({ doctorID: tokenID })
+            const findpatientall = await PatientHistory.find({ doctorID: tokenID }).populate('userID')
 
             return res.json({ Result: findpatientall })
 
