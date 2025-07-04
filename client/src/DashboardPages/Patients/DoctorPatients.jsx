@@ -116,7 +116,7 @@ const DoctorPatients = () => {
                             <th className="px-6 py-4 font-semibold tracking-wider">Name</th>
                             <th className="px-6 py-4 font-semibold tracking-wider">Age</th>
                             <th className="px-6 py-4 font-semibold tracking-wider">Gender</th>
-                            <th className="px-6 py-4 font-semibold tracking-wider">View History</th>
+                            <th className="px-6 py-4 font-semibold tracking-wider">Action</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -131,12 +131,17 @@ const DoctorPatients = () => {
                                     <td className="px-6 py-4">{item.userID?.age || '-'}</td>
                                     <td className="px-6 py-4">{item.userID?.gender || '-'}</td>
                                     <td className="px-6 py-4">
-                                        <Link
-                                            to={`/doctor/view-history/${item.userID?._id}`}
-                                            className="text-blue-600 hover:underline"
-                                        >
-                                            View
-                                        </Link>
+                                        <div className="flex">
+                                            <Link
+                                                to={`/doctor/view-history/${item.userID?._id}`}
+                                                className="text-blue-600 hover:underline"
+                                            >
+                                                View
+                                            </Link>
+                                            <div className="text-blue-600 hover:underline ml-4 cursor-pointer">
+                                                Add Remarks
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             ))
@@ -158,8 +163,8 @@ const DoctorPatients = () => {
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                         className={`px-3 py-1 rounded-md border ${currentPage === 1
-                                ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-                                : 'border-blue-600 text-blue-600 hover:bg-blue-100'
+                            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+                            : 'border-blue-600 text-blue-600 hover:bg-blue-100'
                             }`}
                     >
                         Prev
@@ -170,8 +175,8 @@ const DoctorPatients = () => {
                             key={i}
                             onClick={() => handlePageChange(i + 1)}
                             className={`px-3 py-1 rounded-md border ${currentPage === i + 1
-                                    ? 'bg-blue-600 text-white border-blue-600'
-                                    : 'border-gray-300 text-gray-600 hover:bg-blue-100'
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'border-gray-300 text-gray-600 hover:bg-blue-100'
                                 }`}
                         >
                             {i + 1}
@@ -182,8 +187,8 @@ const DoctorPatients = () => {
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                         className={`px-3 py-1 rounded-md border ${currentPage === totalPages
-                                ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-                                : 'border-blue-600 text-blue-600 hover:bg-blue-100'
+                            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+                            : 'border-blue-600 text-blue-600 hover:bg-blue-100'
                             }`}
                     >
                         Next
