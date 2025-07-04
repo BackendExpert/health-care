@@ -9,6 +9,7 @@ router.get('/get-allpatients', authMiddleware, checkPermission('get-all-patients
 
 router.get('/get-patientbyid/:id', authMiddleware, checkPermission('get-patientbyid'), PatientController.getPatientbyID)
 
+router.get('/mypatientHistroy', authMiddleware, checkPermission('patient-history'), PatientController.mypatientHistroy) 
 
 
 module.exports = router;

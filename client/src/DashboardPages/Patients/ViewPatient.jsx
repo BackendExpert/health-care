@@ -74,13 +74,6 @@ const ViewPatient = () => {
                     <div className="text-center text-gray-500">Loading patient data...</div>
                 )}
             </div>
-            <div className="mt-4">
-                <DefaultBtn 
-                    type='submit'
-                    label={!patienthistorybtn ? 'VIew Patient History':'Close'}
-                    onClick={() => setpatienthistorybtn(!patienthistorybtn)}
-                />
-            </div>
         </div>
 
     )

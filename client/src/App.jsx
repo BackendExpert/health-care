@@ -25,13 +25,17 @@ import CreateRolePermissions from './DashboardPages/Permissions/CreateRolePermis
 import ViewOneRole from './DashboardPages/Permissions/ViewOneRole'
 
 import DashError from './components/Errors/DashError'
-import Patients from './DashboardPages/Patients/Patients'
 import Profile from './DashboardPages/Profile/Profile'
 import ViewPatient from './DashboardPages/Patients/ViewPatient'
 
 import DoctorsDash from './DashboardPages/Doctors/Doctors'
 import AddDoctor from './DashboardPages/Doctors/AddDoctor'
 import ViewDoctor from './DashboardPages/Doctors/ViewDoctor'
+import Appointments from './DashboardPages/Appointments/Appointments'
+import CreateAppoinment from './DashboardPages/Appointments/CreateAppoinment'
+import ViewHistory from './DashboardPages/Appointments/ViewHistory'
+import Patients from './DashboardPages/Patients/Patients'
+import ViewHistoryP from './DashboardPages/Patients/ViewHistoryP'
 
 const AppContent = () => {
     const location = useLocation()
@@ -102,10 +106,15 @@ const AppContent = () => {
                         <Route path='Home' element={<PrivateRoute element={<DashHome />} />} />
                         <Route path='Patients' element={<PrivateRoute element={<Patients />} />} />
                         <Route path='ViewPatient/:id' element={<PrivateRoute element={<ViewPatient /> } /> } />
+                        <Route path='view-history/:id' element={<PrivateRoute element={<ViewHistoryP /> } /> } />
 
                         <Route path='Doctors' element={<PrivateRoute element={<DoctorsDash /> } /> } />
                         <Route path='AddDoctor' element={<PrivateRoute element={<AddDoctor /> } /> } />
                         <Route path='ViewDoctor/:id' element={<PrivateRoute element={<ViewDoctor /> } /> } />
+
+                        <Route path='Appointments' element={<PrivateRoute element={<Appointments />} /> } />
+                        <Route path='CreateAppoinment' element={<PrivateRoute element={<CreateAppoinment /> } /> } /> 
+                        <Route path='ViewHistory/:id' element={<PrivateRoute element={<ViewHistory /> } /> } />
 
                         <Route path='Profile' element={<PrivateRoute element={<Profile /> } /> } />
                     </Route>

@@ -1,24 +1,26 @@
 const mongoose = require('mongoose');
 
 const PatientHistorySchema = new mongoose.Schema({
-    patientID: {
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient'
+    },
+    doctorID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    patientNIC: {
-        type: String,
-        required: true,
-    },
-    appoimentDate: {
+    appointmentData: {
         type: Date,
-        required: true,
+        required: true
     },
-    receipt: {
+    remark: {
         type: String,
-        required: true,
+    },
+    nextDate: {
+        type: Date,
     }
 }, { timestamps: true });
 
-const PatientHistory = mongoose.model('ModelName', PatientHistorySchema);
+const PatientHistory = mongoose.model('PatientHistory', PatientHistorySchema);
 
 module.exports = PatientHistory;

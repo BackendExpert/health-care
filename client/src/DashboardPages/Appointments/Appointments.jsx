@@ -1,10 +1,10 @@
 import React from 'react';
 import { getUserInfoFromToken } from '../../utils/auth';
-import AdminStaffP from './AdminStaffP';
-import DoctorPatients from './DoctorPatients';
+import AdminStaff from './AdminStaff';
+import PatientAppoinments from './PatientAppoinments';
+import DoctorAppointments from './DoctorAppointments';
 
-
-const Patients = () => {
+const Appointments = () => {
     const { username, roles } = getUserInfoFromToken() || {};
 
 
@@ -14,18 +14,23 @@ const Patients = () => {
 
 
     if (roleNames.includes('admin')) {
-        return <AdminStaffP /> ;
+        return <AdminStaff /> ;
     }
 
     if (roleNames.includes('staff')) {
-        return <AdminStaffP /> ;
+        return <AdminStaff /> ;
     }
 
     if (roleNames.includes('doctor')) {
-        return <DoctorPatients />;
+        return <DoctorAppointments />;
     }
+
+    if (roleNames.includes('patient')) {
+        return <PatientAppoinments /> ;
+    }
+
 
     return <div>No Appointments Available</div>;
 };
 
-export default Patients;
+export default Appointments;

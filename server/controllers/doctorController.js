@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const Role = require("../models/Role");
 const Doctor = require("../models/Doctor");
 const transporter = require('../utils/emailTransporter');
-
+const Patients = require("../models/Patient");
+const PatientHistory = require("../models/PatientHistory");
+const jwt = require("jsonwebtoken")
 
 const doctorController = {
     createDoctor: async (req, res) => {
@@ -96,26 +98,74 @@ const doctorController = {
         }
     },
 
-    getalldoctors: async(req, res) => {
-        try{
+    getalldoctors: async (req, res) => {
+        try {
             const alldoctors = await Doctor.find()
 
             return res.json({ Result: alldoctors })
         }
-        catch(err){
+        catch (err) {
             console.log(err)
         }
     },
 
-    viewdoctorbyid: async(req, res) => {
-        try{
+    viewdoctorbyid: async (req, res) => {
+        try {
             const id = req.params.id
 
             const getdoctor = await Doctor.findById(id)
 
             return res.json({ Result: getdoctor })
         }
-        catch(err){
+        catch (err) {
+            console.log(err)
+        }
+    },
+
+    mypatients: async (req, res) => {
+        try {
+            const token = req.header('Authorization');
+            if (!token || !token.startsWith('Bearer ')) {
+                return res.json({ Error: "Missing or invalid token" });
+            }
+
+            const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+            const tokenID = decoded.id;
+
+            const findpatientall = await PatientHistory.find({ doctorID: tokenID }).populate('userID')
+
+            return res.json({ Result: findpatientall })
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+
+    addremak: async (req, res) => {
+        try {
+            const {
+                nextDate,
+                remark
+            } = req.body
+
+            const patientID = req.params.id
+
+            const newRemarks = await PatientHistory.findOneAndUpdate(
+                { userID: patientID },
+                { remark, nextDate },  
+                { new: true }          
+            );
+
+            if(newRemarks){
+                return res.json({ Status: "Success", Message: "Remark and Next Date Added Success"})
+            }
+            else{
+                return res.json({ Error: "Internal Server Error"})
+            }
+
+        }
+        catch (err) {
             console.log(err)
         }
     }
