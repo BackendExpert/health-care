@@ -25,7 +25,6 @@ import CreateRolePermissions from './DashboardPages/Permissions/CreateRolePermis
 import ViewOneRole from './DashboardPages/Permissions/ViewOneRole'
 
 import DashError from './components/Errors/DashError'
-import Patients from './DashboardPages/Patients/Patients'
 import Profile from './DashboardPages/Profile/Profile'
 import ViewPatient from './DashboardPages/Patients/ViewPatient'
 
@@ -35,6 +34,7 @@ import ViewDoctor from './DashboardPages/Doctors/ViewDoctor'
 import Appointments from './DashboardPages/Appointments/Appointments'
 import CreateAppoinment from './DashboardPages/Appointments/CreateAppoinment'
 import ViewHistory from './DashboardPages/Appointments/ViewHistory'
+import Patients from './DashboardPages/Patients/Patients'
 
 const AppContent = () => {
     const location = useLocation()

@@ -281,20 +281,6 @@ const DoctorAppointments = () => {
                             <div className="text-center text-red-500">No patient data found.</div>
                         )}
 
-                        <div className="mt-6 text-center">
-                            <DefaultBtn
-                                type="button"
-                                label={patienthistorybtn ? 'Close History' : 'View Patient History'}
-                                onClick={() => setpatienthistorybtn(!patienthistorybtn)}
-                            />
-                        </div>
-
-                        {patienthistorybtn && (
-                            <div className="mt-4 p-4 border rounded-md bg-gray-50 text-gray-700">
-                                <p>Patient history details coming soon...</p>
-                            </div>
-                        )}
-
                         <div className="mt-6 text-right">
                             <button
                                 onClick={() => setShowModal(false)}
