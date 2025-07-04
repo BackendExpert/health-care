@@ -2,6 +2,7 @@ import React from 'react';
 import { getUserInfoFromToken } from '../../utils/auth';
 import AdminStaff from './AdminStaff';
 import PatientAppoinments from './PatientAppoinments';
+import DoctorAppointments from './DoctorAppointments';
 
 const Appointments = () => {
     const { username, roles } = getUserInfoFromToken() || {};
@@ -21,7 +22,7 @@ const Appointments = () => {
     }
 
     if (roleNames.includes('doctor')) {
-        return <div>Doctor Appointments</div>;
+        return <DoctorAppointments />;
     }
 
     if (roleNames.includes('patient')) {

@@ -1,4 +1,5 @@
 const Appoinment = require("../models/Appoinment");
+const Patients = require("../models/Patient");
 const Role = require("../models/Role");
 const User = require("../models/User");
 const jwt = require('jsonwebtoken')
@@ -20,8 +21,10 @@ const AppoinmentController = {
                 AppoinmentData,
             } = req.body
 
+            const getpatientID = await Patients.findOne({ userID: tokenID })
+
             const newAppoinment = new Appoinment({
-                userID: tokenID,
+                userID: getpatientID._id,
                 doctorID: doctorID,
                 AppoinmentData: AppoinmentData
             })
@@ -89,7 +92,9 @@ const AppoinmentController = {
             const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
             const tokenID = decoded.id;
 
-            const myappoinemts = await Appoinment.find({ userID: tokenID })
+            const getpatientID = await Patients.findOne({ userID: tokenID })
+
+            const myappoinemts = await Appoinment.find({ userID: getpatientID._id })
                 .populate('doctorID')
                 .sort({ AppoinmentData: 1 });
 
@@ -114,7 +119,11 @@ const AppoinmentController = {
             const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
             const tokenID = decoded.id;
 
+
             const appoimentdoctor = await Appoinment.find({ doctorID: tokenID })
+                .populate('userID')
+                .sort({ AppoinmentData: 1 });
+
 
             if (appoimentdoctor.length === 0) {
                 return res.json({ Error: "No Appoinments found" })
