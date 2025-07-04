@@ -1,5 +1,6 @@
 const Appoinment = require("../models/Appoinment");
 const Patients = require("../models/Patient");
+const PatientHistory = require("../models/PatientHistory");
 const Role = require("../models/Role");
 const User = require("../models/User");
 const jwt = require('jsonwebtoken')
@@ -32,6 +33,18 @@ const AppoinmentController = {
             const resultAppoinment = await newAppoinment.save()
 
             if (resultAppoinment) {
+                const checkhistroy = await PatientHistory.findOne({ userID: getpatientID._id })
+
+                if(!checkhistroy){
+                    const newHistory = new PatientHistory({
+                        userID: getpatientID._id,
+                        doctorID: doctorID,
+                        appointmentData: AppoinmentData,
+                    })
+
+                    const resultnewhistry = await newHistory.save()                    
+                }
+                
                 return res.json({ Status: "Success", Message: "Appoinment Created Success" })
             }
             else {

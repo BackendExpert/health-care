@@ -7,6 +7,7 @@ import secureLocalStorage from 'react-secure-storage'
 
 const PatientAppoinments = () => {
     const token = secureLocalStorage.getItem('login')
+    const emailuser = secureLocalStorage.getItem('loginE')
     const [allappoinemts, setallappoinemts] = useState([])
     const [filteredAppoinemts, setFilteredAppoinemts] = useState([])
 
@@ -36,8 +37,8 @@ const PatientAppoinments = () => {
 
         if (search.trim() !== '') {
             filtered = filtered.filter(app =>
-                (app.userID?.username?.toLowerCase().includes(search.toLowerCase()) ||
-                    app.doctorID?.username?.toLowerCase().includes(search.toLowerCase()))
+            (app.userID?.username?.toLowerCase().includes(search.toLowerCase()) ||
+                app.doctorID?.username?.toLowerCase().includes(search.toLowerCase()))
             )
         }
 
@@ -128,10 +129,17 @@ const PatientAppoinments = () => {
             </div>
 
             {/* Add Appointment */}
-            <div className="mb-6">
-                <Link to={'/Dashboard/CreateAppoinment'}>
-                    <DefaultBtn label='Add New Appointment' />
-                </Link>
+            <div className="flex">
+                <div className="mb-6">
+                    <Link to={'/Dashboard/CreateAppoinment'}>
+                        <DefaultBtn label='Add New Appointment' />
+                    </Link>
+                </div>
+                <div className="mb-6 ml-4">
+                    <Link to={`/Dashboard/ViewHistory/${emailuser}`}>
+                        <DefaultBtn label='View my History' />
+                    </Link>
+                </div>
             </div>
 
             {/* Table */}

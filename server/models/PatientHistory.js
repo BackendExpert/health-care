@@ -23,4 +23,4 @@ const PatientHistorySchema = new mongoose.Schema({
 
 const PatientHistory = mongoose.model('PatientHistory', PatientHistorySchema);
 
-module.exports = Patients;
+module.exports = PatientHistory;

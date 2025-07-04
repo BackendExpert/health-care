@@ -102,7 +102,7 @@ const AdminStaff = () => {
                         {currentItems.length > 0 ? currentItems.map((item, index) => (
                             <tr key={item._id} className="hover:bg-gray-50 transition">
                                 <td className="px-6 py-4">{indexOfFirstItem + index + 1}</td>
-                                <td className="px-6 py-4">{item.userID?.username || 'N/A'}</td>
+                                <td className="px-6 py-4">{item.userID?.fullname || 'N/A'}</td>
                                 <td className="px-6 py-4">{item.doctorID?.username || 'N/A'}</td>
                                 <td className="px-6 py-4">
                                     {new Date(item.AppoinmentData).toLocaleDateString()}
