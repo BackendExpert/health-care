@@ -18,9 +18,11 @@ const DoctorAppointments = () => {
     const [showModal, setShowModal] = useState(false)
     const [patienthistorybtn, setpatienthistorybtn] = useState(false)
     const [loadingPatient, setLoadingPatient] = useState(false)
+    const [viewUpcoming, setViewUpcoming] = useState(true)  // true = upcoming, false = past
 
     const itemsPerPage = 15
 
+    // Fetch all appointments
     useEffect(() => {
         axios.get(import.meta.env.VITE_APP_API + '/appoinments/doctor-appoiments', {
             headers: {
@@ -30,20 +32,38 @@ const DoctorAppointments = () => {
             .then(res => {
                 console.log('Appointments API Response:', res.data.Result)
                 setallappoinemts(res.data.Result)
-                setFilteredAppointments(res.data.Result)
             })
             .catch(err => console.log(err))
     }, [token])
 
+    // Filter appointments based on search, date filter, and upcoming/past toggle
     useEffect(() => {
-        let filtered = allappoinemts
+        const today = new Date()
+        const fourWeeksLater = new Date()
+        fourWeeksLater.setDate(today.getDate() + 28)
 
+        let filtered = allappoinemts || []
+
+        // Filter by upcoming or past appointments
+        filtered = filtered.filter(item => {
+            const apptDate = new Date(item.AppoinmentData)
+            if (viewUpcoming) {
+                // upcoming = date >= today and <= 4 weeks from today
+                return apptDate >= today && apptDate <= fourWeeksLater
+            } else {
+                // past = date < today
+                return apptDate < today
+            }
+        })
+
+        // Filter by search query on patient name
         if (searchQuery.trim() !== "") {
             filtered = filtered.filter(item =>
-                item.userID?.username?.toLowerCase().includes(searchQuery.toLowerCase())
+                item.userID?.fullname?.toLowerCase().includes(searchQuery.toLowerCase())
             )
         }
 
+        // Filter by specific date filter input
         if (filterDate !== "") {
             filtered = filtered.filter(item => {
                 const appointmentDate = new Date(item.AppoinmentData).toISOString().split('T')[0]
@@ -53,8 +73,9 @@ const DoctorAppointments = () => {
 
         setFilteredAppointments(filtered)
         setCurrentPage(1)
-    }, [searchQuery, filterDate, allappoinemts])
+    }, [searchQuery, filterDate, allappoinemts, viewUpcoming])
 
+    // Fetch patient details when patient is selected
     useEffect(() => {
         if (selectedPatientId) {
             setLoadingPatient(true)
@@ -66,7 +87,6 @@ const DoctorAppointments = () => {
                 .then(res => {
                     console.log('Patient API Response:', res.data.Result)
                     if (res.data && res.data.Result) {
-                        // If result is array, pick first, else take object directly
                         const patientData = Array.isArray(res.data.Result) ? res.data.Result[0] : res.data.Result
                         setPatient(patientData)
                     } else {
@@ -88,6 +108,7 @@ const DoctorAppointments = () => {
 
     return (
         <div>
+            {/* Summary */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-6">
                 <div className="relative bg-blue-600 text-white p-6 rounded-2xl shadow-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300">
                     <div className="absolute right-4 top-4 opacity-20 text-white text-6xl">
@@ -95,13 +116,30 @@ const DoctorAppointments = () => {
                     </div>
                     <div className="relative z-10">
                         <div className="text-sm font-medium uppercase tracking-wide text-blue-100">
-                            Total Appointments
+                            Total Appointments ({viewUpcoming ? 'Upcoming 4 Weeks' : 'Past'})
                         </div>
                         <div className="mt-2 text-3xl font-bold">{filteredAppointments.length}</div>
                     </div>
                 </div>
             </div>
 
+            {/* Toggle Upcoming / Past */}
+            <div className="mb-4 flex justify-center space-x-4">
+                <button
+                    onClick={() => setViewUpcoming(true)}
+                    className={`px-4 py-2 rounded-xl ${viewUpcoming ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                >
+                    Upcoming (Next 4 Weeks)
+                </button>
+                <button
+                    onClick={() => setViewUpcoming(false)}
+                    className={`px-4 py-2 rounded-xl ${!viewUpcoming ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                >
+                    Past
+                </button>
+            </div>
+
+            {/* Filters */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                 <DefaultInput
                     label="Search by patient"
@@ -118,6 +156,7 @@ const DoctorAppointments = () => {
                 />
             </div>
 
+            {/* Appointment Table */}
             <div className="overflow-x-auto rounded-2xl shadow-lg">
                 <table className="min-w-full text-sm text-left text-gray-600 bg-white">
                     <thead className="text-xs uppercase bg-blue-100 text-blue-700">
@@ -137,7 +176,7 @@ const DoctorAppointments = () => {
                                 <td className="px-6 py-4">
                                     {new Date(item.AppoinmentData).toLocaleDateString()}
                                 </td>
-                                <td className="px-6 py-4">{item.userID?.number || 'N/A'}</td> {/* Fix here */}
+                                <td className="px-6 py-4">{item.userID?.number || 'N/A'}</td>
                                 <td className="px-6 py-4">
                                     <button
                                         onClick={() => {
@@ -160,6 +199,7 @@ const DoctorAppointments = () => {
                 </table>
             </div>
 
+            {/* Pagination */}
             {totalPages > 1 && (
                 <div className="flex justify-center mt-6 space-x-2">
                     <button
@@ -180,6 +220,7 @@ const DoctorAppointments = () => {
                 </div>
             )}
 
+            {/* Patient Details Modal */}
             {showModal && (
                 <div
                     className="fixed inset-0 bg-white/30 backdrop-blur-sm flex items-center justify-center z-50"
@@ -240,6 +281,19 @@ const DoctorAppointments = () => {
                             <div className="text-center text-red-500">No patient data found.</div>
                         )}
 
+                        <div className="mt-6 text-center">
+                            <DefaultBtn
+                                type="button"
+                                label={patienthistorybtn ? 'Close History' : 'View Patient History'}
+                                onClick={() => setpatienthistorybtn(!patienthistorybtn)}
+                            />
+                        </div>
+
+                        {patienthistorybtn && (
+                            <div className="mt-4 p-4 border rounded-md bg-gray-50 text-gray-700">
+                                <p>Patient history details coming soon...</p>
+                            </div>
+                        )}
 
                         <div className="mt-6 text-right">
                             <button
