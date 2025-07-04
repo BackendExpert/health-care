@@ -153,9 +153,6 @@ const DoctorPatients = () => {
                                 <td className="px-6 py-4">{item.userID?.gender || '-'}</td>
                                 <td className="px-6 py-4">
                                     <div className="flex">
-                                        <Link to={`/Dashboard/view-history/${item.userID?._id}`} className="text-blue-600 hover:underline">
-                                            View
-                                        </Link>
                                         <button
                                             onClick={() => openModal(item.userID?._id)}
                                             className="ml-4 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
