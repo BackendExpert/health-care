@@ -82,14 +82,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className="bg-blue-600 py-6 px-8 xl:px-32 text-white flex flex-col xl:flex-row items-center justify-between space-y-4 xl:space-y-0 text-center xl:text-left border-t border-blue-500">
-                <div>
-                    © {new Date().getFullYear()} <span className="font-bold">MyHealthCare</span>. All Rights Reserved.
-                </div>
-                <div>
-                    Engineered By <a href="https://blackalphalabs.com/" target="_blank" className="underline hover:text-blue-200">BlackAlphaLabs</a>
-                </div>
-            </div>
+
         </div>
     )
 }
